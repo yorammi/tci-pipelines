@@ -1,0 +1,5 @@
+@Library ("tikal-pipelib") _
+
+properties([parameters([string(name: 'TEXT', defaultValue: 'Test TEXT')])])
+
+tpl_echo (env.TEXT)
