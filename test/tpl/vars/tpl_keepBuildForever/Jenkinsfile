@@ -1,0 +1,18 @@
+@Library ("tikal-pipelib") _
+
+pipeline
+{
+    agent any
+
+    stages
+    {
+        stage('Keep build forever')
+        {
+            steps
+            {
+                tpl_keepBuildForever()
+            }
+        }
+    }
+}
+
