@@ -1,11 +1,11 @@
 package tpl.ci.gradle
 
-import tpl.ci.gradle.tpl_GradleCiPipeline
+import tpl.ci.gradle.tplGradleCiPipeline
 
 @Library('tikal-pipelib') _
 
 node("linux-host-slave") {
-    pipeline = new tpl_GradleCiPipeline(this)
+    pipeline = new tplGradleCiPipeline(this)
     pipeline.run()
 
     def buildResult = pipeline.getCurrentBuildResult() != null ? pipeline.getCurrentBuildResult() : 'SUCCESS'

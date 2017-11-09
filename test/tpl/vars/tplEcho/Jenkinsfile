@@ -15,7 +15,7 @@ pipeline
         {
             steps
             {
-                tpl_echo (TEXT)
+                tplEcho (TEXT)
             }
         }
     }

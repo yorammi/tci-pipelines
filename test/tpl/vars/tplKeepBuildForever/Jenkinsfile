@@ -10,7 +10,7 @@ pipeline
         {
             steps
             {
-                tpl_keepBuildForever()
+                tplKeepBuildForever()
             }
         }
     }

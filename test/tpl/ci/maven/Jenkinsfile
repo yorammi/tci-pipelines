@@ -7,7 +7,7 @@ package tpl.ci.maven
  */
 node() {
     var1 = 'chen1'
-    def pipeline = new tpl_ArtifactoryCiPipeline(this)
+    def pipeline = new tplArtifactoryCiPipeline(this)
 
     pipeline.artifactoryName = 'artifactory'
     pipeline.mavenName = 'mvn350'

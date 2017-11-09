@@ -17,17 +17,17 @@ pipeline
     {
         success
         {
-            tpl_advancedSlackNotification('SUCCESS',"tap-tests")
+            tplAdvancedSlackNotification('SUCCESS',"tap-tests")
         }
 
         failure
         {
-            tpl_advancedSlackNotification('FAILURE',"tap-tests")
+            tplAdvancedSlackNotification('FAILURE',"tap-tests")
         }
 
         unstable
         {
-            tpl_advancedSlackNotification('UNSTABLE',"tap-tests")
+            tplAdvancedSlackNotification('UNSTABLE',"tap-tests")
         }
     }
 }
