@@ -25,10 +25,13 @@ pipeline
         {
             tplAdvancedSlackNotification('FAILURE',"jenkins-notifications")
         }
-
         unstable
         {
             tplAdvancedSlackNotification('UNSTABLE',"jenkins-notifications")
+        }
+        aborted
+        {
+            tplAdvancedSlackNotification('ABORTED',"jenkins-notifications")
         }
     }
 }
