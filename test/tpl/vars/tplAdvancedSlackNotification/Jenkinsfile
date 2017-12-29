@@ -17,7 +17,6 @@ pipeline
     {
         success
         {
-            echo "before Slack"
             tplAdvancedSlackNotification('SUCCESS',"jenkins-notifications")
         }
 
