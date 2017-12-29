@@ -10,6 +10,7 @@ pipeline
             steps
             {
                 echo "Testing Advanced Slack Notification"
+                tplSetRandomBuildStatus()
             }
         }
     }
