@@ -16,12 +16,16 @@ pipeline
     }
     agent
     {
-        docker
-        {
-            image 'python:2.7'
-            args "-u root"
-        }
+        label 'linux-host-slave'
     }
+//    agent
+//    {
+//        docker
+//        {
+//            image 'python:2.7'
+//            args "-u root"
+//        }
+//    }
     stages
     {
         stage('Setup')
@@ -40,18 +44,25 @@ pipeline
         {
             steps
             {
-                sh "pip install -r ${REQUIREMENTS_FILE}"
-            }
-        }
-        stage('Run script')
-        {
-            steps
-            {
                 script
                 {
-                    sh "python ./${PYTHON_SCRIPT_FILE}"
+                    docker.image("python:2.7").inside('-u root')
+                    {
+                        sh "pip install -r ${REQUIREMENTS_FILE}"
+                        sh "python ./${PYTHON_SCRIPT_FILE}"
+                    }
                 }
             }
         }
+//        stage('Run script')
+//        {
+//            steps
+//            {
+//                script
+//                {
+//                    sh "python ./${PYTHON_SCRIPT_FILE}"
+//                }
+//            }
+//        }
     }
 }
