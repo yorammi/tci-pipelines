@@ -1,0 +1,18 @@
+pipeline
+{
+    agent any
+    stages
+    {
+        stage('Run pipelineForceCode Python script')
+        {
+            steps
+            {
+                build job: 'TPL_testGenericPythonRunner', parameters: [string(name: 'REPOSITORY_URL', value: 'https://github.com/tikalk/pipelineForceCode.git'),
+                                                                      string(name: 'GIT_REPO_CRED', value: ''),
+                                                                      string(name: 'BRANCH', value: 'master'),
+                                                                       string(name: 'REQUIREMENTS_FILE', value: 'groovy/resources/genericPythonRunner/requirements.txt'),
+                                                                      string(name: 'PYTHON_SCRIPT_FILE', value: 'groovy/src/genericPythonRunner/testGenericPythonRunner.py')]
+            }
+        }
+    }
+}
