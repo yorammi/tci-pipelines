@@ -1,0 +1,41 @@
+@Library("tikal-pipelib") _
+
+import tpl.python.runners.tplGenericPythonRunner
+
+pipeline
+{
+    parameters
+    {
+        string(name: 'REPOSITORY',
+                description: 'URL to GIT repository')
+        string(name: 'GIT_TOKEN',
+                description: 'Credential name of GIT user')
+        string(name: 'BRANCH',
+                defaultValue: 'master',
+                description: 'Name of branch')
+        string(name: 'REQUIREMENTS_FILE',
+                description: 'Relative path to the requirements file')
+        string(name: 'PYTHON_SCRIPT_FILE',
+                description: 'Relative path to the python script')
+        string(name: 'GROOVY_SCRIPT',
+                description: 'Additinal setup groovy script')
+    }
+    agent any
+    stages
+    {
+        stage('Python script run')
+        {
+            steps
+            {
+                script
+                {
+                    docker.image("python:2.7").inside('-u root')
+                    {
+                        def runner = new tplGenericPythonRunner(this)
+                        runner.run()
+                    }
+                }
+            }
+        }
+    }
+}
