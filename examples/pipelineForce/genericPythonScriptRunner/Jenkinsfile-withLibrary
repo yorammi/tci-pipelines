@@ -20,7 +20,11 @@ pipeline
         string(name: 'GROOVY_SCRIPT',
                 description: 'Additinal setup groovy script')
     }
-    agent any
+    agent
+    {
+        label 'linux-host-slave'
+    }
+//    agent any
     stages
     {
         stage('Python script run')
