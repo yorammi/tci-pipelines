@@ -1,0 +1,35 @@
+pipeline
+{
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+    agent any
+
+    stages
+    {
+        stage('SCM: code update')
+        {
+            steps
+            {
+                checkout([
+                        userRemoteConfigs: [[url: "https://github.com/tikalk/pipelineForceCode.git",
+                        $class: 'GitSCM', branches: [[name: 'master']]]]
+                ])
+            }
+        }
+        stage('Run selected tests')
+        {
+            steps
+            {
+                script
+                {
+                    docker.image("python:2.7-wheezy").inside('-u root')
+                    {
+                        sh "py.test python/test -v"
+                    }
+                }
+            }
+        }
+    }
+}
