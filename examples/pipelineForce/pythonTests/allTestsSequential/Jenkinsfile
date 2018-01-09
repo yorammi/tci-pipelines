@@ -29,7 +29,7 @@ pipeline
                         sh "pip install pytest pytest-dependency pytest-allure-adaptor"
                         sh "mkdir -p allure-results"
                         sh "mkdir -p junit-results"
-                        sh "py.test --alluredir=allure-results --junitxml=.unit-results/TESTS.xml python/test -v"
+                        sh "py.test --alluredir=allure-results --junitxml=unit-results/TESTS.xml python/test -v"
                     }
                 }
             }
