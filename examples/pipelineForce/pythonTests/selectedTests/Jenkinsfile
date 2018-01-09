@@ -8,16 +8,16 @@ pipeline
 
     stages
     {
-        stage('SCM: code update')
-        {
-            steps
-            {
-                checkout([
-                        userRemoteConfigs: [[url: "https://github.com/tikalk/pipelineForceCode.git",
-                        $class: 'GitSCM', branches: [[name: 'master']]]]
-                ])
-            }
-        }
+//        stage('SCM: code update')
+//        {
+//            steps
+//            {
+//                checkout([
+//                        userRemoteConfigs: [[url: "https://github.com/tikalk/pipelineForceCode.git",
+//                        $class: 'GitSCM', branches: [[name: 'master']]]]
+//                ])
+//            }
+//        }
         stage('Run selected tests')
         {
             steps
