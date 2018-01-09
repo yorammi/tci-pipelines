@@ -26,7 +26,7 @@ pipeline
                 {
                     docker.image("python:2.7-wheezy").inside('-u root')
                     {
-                        sh "pip install pytest pytest-dependency"
+                        sh "pip install pytest pytest-dependency pytest-allure-adaptor"
                         sh "mkdir -p allure-results"
                         sh "mkdir -p junit-results"
                         sh "py.test --alluredir=allure-results --junitxml=.unit-results/TESTS.xml python/test -v"
