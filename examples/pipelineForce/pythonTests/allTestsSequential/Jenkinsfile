@@ -48,7 +48,11 @@ pipeline
         always
         {
             junit 'junit-results/TESTS.xml'
-            allure(commandline: '2.5.0', includeProperties: false, jdk: '', properties: [[key: 'httpallure.tests.management.pattern', value: 'http://tms.company.com/%s']], results: [[path: './allure-results']])
+            allure(commandline: '2.5.0',
+                    includeProperties: false, jdk: '',
+                    properties: [[key: 'httpallure.tests.management.pattern',
+                                  value: 'http://tms.company.com/%s']],
+                                  results: [[path: './allure-results']])
             tplGetTestSummary()
         }
     }

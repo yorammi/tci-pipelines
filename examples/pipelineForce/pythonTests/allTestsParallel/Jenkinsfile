@@ -20,12 +20,9 @@ pipeline
                 ])
             }
         }
-        stage('Run all tests in parallel')
-        {
-            steps
-            {
-                script
-                {
+        stage('Run all tests in parallel') {
+            steps {
+                script {
                     sh "mkdir -p allure-results"
                     sh "mkdir -p junit-results"
 
@@ -34,23 +31,17 @@ pipeline
                     sh "find ${WORKSPACE}/python/test -name 'test_*.py' > tstFiles"
                     List<String> tstFiles=readFile('tstFiles').split()
                     for (String testFileName : tstFiles) {
-                        if (!testFileName.contains('__pycache__'))
-                        {
+                        if (!testFileName.contains('__pycache__')) {
                             def label = testFileName.replace(basePath,"")
                             def filename = label.substring(label.lastIndexOf(File.separator) + 1).replace(".py","")
-                            stage ("Test: ${filename}")
-                            {
-                                builders[filename] =
-                                {
-                                    docker.image("python:2.7-wheezy").inside('-u root')
-                                    {
+                            stage ("Test: ${filename}") {
+                                builders[filename] = {
+                                    docker.image("python:2.7-wheezy").inside('-u root') {
                                         sh "pip install pytest pytest-dependency pytest-allure-adaptor"
-                                        try
-                                        {
+                                        try {
                                             sh "py.test --alluredir=allure-results --junitxml=junit-results/TESTS-${filename}.xml python/${label} -v"
                                         }
-                                        catch(error)
-                                        {
+                                        catch(error) {
                                         }
                                     }
                                 }
@@ -58,12 +49,10 @@ pipeline
                         }
                     }
 
-                    try
-                    {
+                    try {
                         parallel builders
                     }
-                    catch (error)
-                    {
+                    catch (error) {
                     }
                 }
             }
@@ -74,7 +63,12 @@ pipeline
         always
         {
             junit 'junit-results/TESTS-*.xml'
-            allure(commandline: '2.5.0', includeProperties: false, jdk: '', properties: [[key: 'httpallure.tests.management.pattern', value: 'http://tms.company.com/%s']], results: [[path: './allure-results']])
+            allure(commandline: '2.5.0',
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [[key: 'httpallure.tests.management.pattern',
+                                  value: 'http://tms.company.com/%s']],
+                                  results: [[path: './allure-results']])
             tplGetTestSummary()
         }
     }
