@@ -30,38 +30,32 @@ pipeline
                     sh "mkdir -p junit-results"
 
                     String basePath = "${WORKSPACE}/python/"
-                    def labels = [];
+                    def builders = [:]
                     sh "find ${WORKSPACE}/python/test -name 'test_*.py' > tstFiles"
                     List<String> tstFiles=readFile('tstFiles').split()
                     for (String testFileName : tstFiles) {
                         if (!testFileName.contains('__pycache__'))
                         {
-                            labels.add(testFileName.replace(basePath,""))
-                        }
-                    }
-
-                    def builders = [:]
-                    for (x in labels)
-                    {
-                        def label = x
-                        def filename = label.substring(label.lastIndexOf(File.separator) + 1).replace(".py","")
-                        stage ("Test: ${filename}")
+                            def label = testFileName.replace(basePath,"")
+                            def filename = label.substring(label.lastIndexOf(File.separator) + 1).replace(".py","")
+                            stage ("Test: ${filename}")
+                            {
+                                builders[filename] =
                                 {
-                                    builders[filename] =
+                                    docker.image("python:2.7-wheezy").inside('-u root')
+                                    {
+                                        sh "pip install pytest pytest-dependency pytest-allure-adaptor"
+                                        try
                                         {
-                                            docker.image("python:2.7-wheezy").inside('-u root')
-                                            {
-                                                sh "pip install pytest pytest-dependency pytest-allure-adaptor"
-                                                try
-                                                {
-                                                    sh "py.test --alluredir=allure-results --junitxml=junit-results/TESTS-${filename}.xml python/${label} -v"
-                                                }
-                                                catch(error)
-                                                {
-                                                }
-                                            }
+                                            sh "py.test --alluredir=allure-results --junitxml=junit-results/TESTS-${filename}.xml python/${label} -v"
                                         }
+                                        catch(error)
+                                        {
+                                        }
+                                    }
                                 }
+                            }
+                        }
                     }
 
                     try
