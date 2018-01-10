@@ -1,0 +1,87 @@
+@Library("tikal-pipelib") _
+
+pipeline
+{
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+    agent any
+
+    stages
+    {
+        stage('SCM: code update')
+        {
+            steps
+            {
+                checkout([
+                        $class: 'GitSCM', branches: [[name: 'master']],
+                        userRemoteConfigs: [[url: 'https://github.com/tikalk/pipelineForceCode.git' ,credentialsId:'']]
+                ])
+            }
+        }
+        stage('Run selected tests')
+        {
+            steps
+            {
+                script
+                {
+                    sh "mkdir -p allure-results"
+                    sh "mkdir -p junit-results"
+
+                    String basePath = "${WORKSPACE}/python/"
+                    def labels = [];
+                    sh "find ${WORKSPACE}/python/test -name 'test_*.py' > tstFiles"
+                    List<String> tstFiles=readFile('tstFiles').split()
+                    for (String testFileName : tstFiles) {
+                        if (!testFileName.contains('__pycache__'))
+                        {
+                            labels.add(testFileName.replace(basePath,""))
+                        }
+                    }
+
+                    def builders = [:]
+                    for (x in labels)
+                    {
+                        def label = x
+                        def filename = label.substring(label.lastIndexOf(File.separator) + 1).replace(".py","")
+                        stage ("Test: ${filename}")
+                                {
+                                    builders[filename] =
+                                        {
+                                            docker.image("python:2.7-wheezy").inside('-u root')
+                                            {
+                                                sh "pip install pytest pytest-dependency pytest-allure-adaptor"
+                                                try
+                                                {
+                                                    sh "py.test --alluredir=allure-results --junitxml=junit-results/TESTS-${filename}.xml python/${label} -v"
+                                                }
+                                                catch(error)
+                                                {
+                                                }
+                                            }
+                                        }
+                                }
+                    }
+
+                    try
+                    {
+                        parallel builders
+                    }
+                    catch (error)
+                    {
+                    }
+                }
+            }
+        }
+    }
+    post
+    {
+        always
+        {
+            junit 'junit-results/TESTS.xml'
+            allure(commandline: '2.5.0', includeProperties: false, jdk: '', properties: [[key: 'httpallure.tests.management.pattern', value: 'http://tms.company.com/%s']], results: [[path: './allure-results']])
+            tplGetTestSummary()
+        }
+    }
+}
