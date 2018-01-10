@@ -20,7 +20,7 @@ pipeline
                 ])
             }
         }
-        stage('Run selected tests')
+        stage('Run all tests in parallel')
         {
             steps
             {
