@@ -1,0 +1,31 @@
+pipeline
+{
+    agent any
+    environment
+    {
+        exampleVariable = "global"
+    }
+    stages
+    {
+        stage('First stage')
+        {
+            steps
+            {
+                echo exampleVariable // will echo 'global'
+                script
+                {
+                    env.exampleVariable = 'changed'
+                    echo exampleVariable // will echo 'changed'
+                }
+                echo exampleVariable // will echo 'changed'
+            }
+        }
+        stage('First stage')
+        {
+            steps
+            {
+                echo exampleVariable // will echo 'changed'
+            }
+        }
+    }
+}
