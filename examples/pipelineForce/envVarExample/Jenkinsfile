@@ -1,10 +1,10 @@
 pipeline
 {
     agent any
-    environment
-    {
+//    environment
+//    {
 //        exampleVariable = "global"
-    }
+//    }
     stages
     {
         stage('First stage')
