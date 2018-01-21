@@ -1,0 +1,32 @@
+@Library("tikal-pipelib") _
+
+pipeline
+{
+    stages
+    {
+        stage('SCM: cleaup')
+        {
+            steps
+            {
+                tplClearWorkspaceAsRoot()
+            }
+        }
+        stage('Root Docker issue')
+        {
+            steps
+            {
+                script
+                {
+                    docker.image("python:2.7-wheezy").inside('-u root')
+                    {
+                        checkout([
+                                $class: 'GitSCM', branches: [[name: 'master']],
+                                userRemoteConfigs: [[url: 'https://github.com/tikalk/pipelineForceCode.git' ,
+                                                     credentialsId:'']]
+                        ])
+                    }
+                }
+            }
+        }
+    }
+}
