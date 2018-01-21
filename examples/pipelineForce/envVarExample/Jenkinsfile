@@ -1,17 +1,17 @@
 pipeline
 {
     agent any
-//    environment
-//    {
-//        exampleVariable = "global"
-//    }
+    environment
+    {
+        env.exampleVariable = "global"
+    }
     stages
     {
         stage('First stage')
         {
             steps
             {
-//                echo "${env.exampleVariable}" // will echo 'global'
+                echo "${env.exampleVariable}" // will echo 'global'
                 script
                 {
                     env.exampleVariable="changed"
