@@ -11,20 +11,20 @@ pipeline
         {
             steps
             {
-                echo exampleVariable // will echo 'global'
+                echo "${env.exampleVariable}" // will echo 'global'
                 script
                 {
                     env.exampleVariable = 'changed'
-                    echo exampleVariable // will echo 'changed'
+                    echo "${env.exampleVariable}" // will echo 'changed'
                 }
-                echo exampleVariable // will echo 'changed'
+                echo "${env.exampleVariable}" // will echo 'changed'
             }
         }
         stage('Second stage')
         {
             steps
             {
-                echo exampleVariable // will echo 'changed'
+                echo "${env.exampleVariable}" // will echo 'changed'
             }
         }
     }
