@@ -5,7 +5,7 @@ pipeline
     agent any
     stages
     {
-        stage('SCM: cleaup')
+        stage('SCM: cleanup')
         {
             steps
             {
