@@ -20,7 +20,7 @@ pipeline
                 echo exampleVariable // will echo 'changed'
             }
         }
-        stage('First stage')
+        stage('Second stage')
         {
             steps
             {
