@@ -3,7 +3,7 @@ pipeline
     agent any
     environment
     {
-        exampleVariable = "global"
+//        exampleVariable = "global"
     }
     stages
     {
@@ -11,7 +11,7 @@ pipeline
         {
             steps
             {
-                echo "${env.exampleVariable}" // will echo 'global'
+//                echo "${env.exampleVariable}" // will echo 'global'
                 script
                 {
                     env.exampleVariable="changed"
