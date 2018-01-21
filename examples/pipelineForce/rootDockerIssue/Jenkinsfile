@@ -5,11 +5,17 @@ pipeline
     agent any
     stages
     {
-        stage('SCM: cleanup')
+        stage('Setup')
         {
             steps
             {
                 tplClearWorkspaceAsRoot()
+                checkout([
+                        $class: 'GitSCM', branches: [[name: 'master']],
+                        userRemoteConfigs:
+                                [[url: 'https://github.com/tikalk/pipelineForceCode.git',
+                                  credentialsId:'']]
+                ])
             }
         }
         stage('Root Docker issue')
@@ -20,12 +26,7 @@ pipeline
                 {
                     docker.image("python:2.7-wheezy").inside('-u root')
                     {
-                        checkout([
-                                $class: 'GitSCM', branches: [[name: 'master']],
-                                userRemoteConfigs:
-                                        [[url: 'https://github.com/tikalk/pipelineForceCode.git',
-                                          credentialsId:'']]
-                        ])
+                        sh "echo root > rootDockerIssue.txt"
                     }
                 }
             }
