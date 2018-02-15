@@ -22,11 +22,4 @@ pipeline
             }
         }
     }
-    post
-    {
-        always
-        {
-            smartSlackNotification()
-        }
-    }
 }
