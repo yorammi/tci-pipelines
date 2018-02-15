@@ -1,0 +1,32 @@
+@Library ("tikal-pipelib") _
+
+pipeline
+{
+    parameters
+    {
+        string(name: 'JOB_NAME', defaultValue: '', description: 'Job name')
+        string(name: 'NEXT_BUILD', defaultValue: '', description: 'Build number of next build')
+    }
+    agent any
+    stages
+    {
+        stage('Set job next build number')
+        {
+            steps
+            {
+                script
+                {
+                    tplSetJobNextBuildNumber(JOB_NAME,NEXT_BUILD.toInteger())
+                    currentBuild.displayName+=" | ${JOB_NAME} | ${NEXT_BUILD}"
+                }
+            }
+        }
+    }
+    post
+    {
+        always
+        {
+            smartSlackNotification()
+        }
+    }
+}
