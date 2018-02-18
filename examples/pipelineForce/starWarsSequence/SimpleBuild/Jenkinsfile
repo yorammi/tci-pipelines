@@ -70,7 +70,7 @@ pipeline
     {
         always
         {
-            junit 'java/starWarsSequence/target/surefire-reports/TEST-*.xml'
+//            junit 'java/starWarsSequence/target/surefire-reports/TEST-*.xml'
             archiveArtifacts '**/target/**/starWarsSequence-*.jar'
         }
     }
