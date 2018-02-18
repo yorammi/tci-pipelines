@@ -72,7 +72,6 @@ pipeline
         {
             junit 'java/starWarsSequence/target/surefire-reports/TEST-*.xml'
             archiveArtifacts '**/target/**/starWarsSequence-*.jar'
-            archive '**/target/surefire-reports/TEST-*.xml'
         }
     }
 }
