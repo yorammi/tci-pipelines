@@ -1,0 +1,76 @@
+pipeline
+{
+    parameters
+    {
+        string(name: 'SEQUENCE', defaultValue: '', description: 'Star Wars movie sequence number')
+    }
+
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '50'))
+        ansiColor('xterm')
+        timestamps()
+    }
+
+    agent any
+    stages
+    {
+        stage('Setup')
+        {
+            steps
+            {
+                script
+                {
+                    currentBuild.displayName = "#${BUILD_ID} | ${SEQUENCE}"
+                }
+                checkout([$class: 'GitSCM', branches: [[name: 'master']],
+                          userRemoteConfigs: [[url: 'https://github.com/tikalk/pipelineForceCode']]
+                ])
+            }
+        }
+        stage('Code build')
+        {
+            steps
+            {
+                withMaven(jdk: 'jdk8u131', maven: 'mvn350')
+                {
+                    dir("java/starWarsSequence")
+                    {
+                        sh "mvn clean install -DskipTests"
+                    }
+                }
+            }
+        }
+        stage('Unit tests')
+        {
+            steps
+            {
+                withMaven(jdk: 'jdk8u131', maven: 'mvn350')
+                {
+                    dir("java/starWarsSequence")
+                    {
+                        sh "mvn test"
+                    }
+                }
+            }
+        }
+        stage('Integration tests')
+        {
+            steps
+            {
+                dir("java/starWarsSequence")
+                {
+                    sh "java -jar target/starWarsSequence-1.0-SNAPSHOT.jar ${SEQUENCE}"
+                }
+            }
+        }
+    }
+    post
+    {
+        always
+        {
+            junit 'java/starWarsSequence/target/surefire-reports/*.xml'
+            archiveArtifacts '**/target/**/starWarsSequence-*.jar'
+        }
+    }
+}
