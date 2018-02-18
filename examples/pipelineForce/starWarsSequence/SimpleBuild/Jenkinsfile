@@ -50,7 +50,6 @@ pipeline
                     dir("java/starWarsSequence")
                     {
                         sh "mvn test"
-                        sh "rm -f target/surefire-reports/com.*.txt"
                     }
                 }
             }
@@ -70,7 +69,6 @@ pipeline
     {
         always
         {
-//            junit 'java/starWarsSequence/target/surefire-reports/TEST-*.xml'
             archiveArtifacts '**/target/**/starWarsSequence-*.jar'
         }
     }
