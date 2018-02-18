@@ -50,7 +50,7 @@ pipeline
                     dir("java/starWarsSequence")
                     {
                         sh "mvn test"
-                        sh "ls -la target/surefire-reports"
+                        sh "rm -f target/surefire-reports/com.*.txt"
                     }
                 }
             }
