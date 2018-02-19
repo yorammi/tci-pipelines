@@ -51,12 +51,12 @@ pipeline
                             Integer currentIndex=0
                             for (String testFileName : tstFiles)
                             {
-                                echo "Test: ${testFileName}"
                                 def filename = testFileName.substring(testFileName.lastIndexOf(File.separator) + 1).replace(".java","")
                                 stage ("Test: ${filename}")
                                 {
                                     tests[filename] =
                                     {
+                                        echo "Test: ${testFileName} Sleep: ${currentIndex}"
                                         sleep(currentIndex)
                                         sh "mvn -Dtest=${filename} test"
                                     }
