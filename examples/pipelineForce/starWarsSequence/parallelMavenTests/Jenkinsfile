@@ -48,8 +48,6 @@ pipeline
                             echo "Number of test files: ${numberOfFiles}"
 
                             def tests = [:]
-                            Integer currentIndex=0
-//                            for (String testFileName : tstFiles)
                             for (int i = 0; i < tstFiles.size(); i++) {
                                 testFileName=tstFiles.get(i)
                                 def filename = testFileName.substring(testFileName.lastIndexOf(File.separator) + 1).replace(".java","")
@@ -57,12 +55,11 @@ pipeline
                                 {
                                     tests[filename] =
                                     {
-                                        echo "Test: ${testFileName} Sleep: ${i}"
+                                        echo "Test: ${filename} Sleep: ${i}"
                                         sleep(i)
                                         sh "mvn -Dtest=${filename} test"
                                     }
                                 }
-                                currentIndex++
                             }
                             try
                             {
