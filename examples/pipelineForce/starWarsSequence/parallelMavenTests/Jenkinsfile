@@ -57,12 +57,20 @@ pipeline
                                 {
                                     tests[filename] =
                                     {
+                                        sleep(currentIndex)
                                         sh "mvn -Dtest=${filename} test"
                                     }
                                 }
                                 currentIndex++
                             }
-                            parallel tests
+                            try
+                            {
+                                parallel tests
+                            }
+                            catch (error e)
+                            {
+
+                            }
 
                         }
                     }
