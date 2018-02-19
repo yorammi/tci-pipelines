@@ -42,10 +42,10 @@ pipeline
                     {
                         script
                         {
-                            sh "find tests -name '*Test.java' > tstFiles"
+                            sh "find test -name '*Test.java' > tstFiles"
                             List<String> tstFiles=readFile('tstFiles').split()
                             int numberOfFiles = tstFiles.size()
-                            echo "Number of files: ${numberOfFiles}"
+                            echo "Number of test files: ${numberOfFiles}"
                             sh "mvn test"
                         }
                     }
