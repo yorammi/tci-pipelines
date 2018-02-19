@@ -67,7 +67,7 @@ pipeline
                             {
                                 parallel tests
                             }
-                            catch (error e)
+                            catch (error)
                             {
 
                             }
