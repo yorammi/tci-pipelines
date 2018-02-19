@@ -46,7 +46,25 @@ pipeline
                             List<String> tstFiles=readFile('tstFiles').split()
                             int numberOfFiles = tstFiles.size()
                             echo "Number of test files: ${numberOfFiles}"
-                            sh "mvn test"
+
+                            def tests = [:]
+                            Integer currentIndex=0
+                            for (String testFileName : tstFiles)
+                            {
+                                echo "Test: ${testFileName}"
+//                                def label = testFileName.replace(basePath,"")
+                                def filename = label.substring(label.lastIndexOf(File.separator) + 1).replace(".java","")
+                                stage ("Test: ${filename}")
+                                {
+                                    tests[filename] =
+                                    {
+                                        sh "mvn test -Dtest=${testFileName}"
+                                    }
+                                }
+                                currentIndex++
+                            }
+                            parallel tests
+
                         }
                     }
                 }
