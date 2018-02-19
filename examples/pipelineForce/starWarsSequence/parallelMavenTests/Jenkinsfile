@@ -52,7 +52,6 @@ pipeline
                             for (String testFileName : tstFiles)
                             {
                                 echo "Test: ${testFileName}"
-//                                def label = testFileName.replace(basePath,"")
                                 def filename = testFileName.substring(testFileName.lastIndexOf(File.separator) + 1).replace(".java","")
                                 stage ("Test: ${filename}")
                                 {
