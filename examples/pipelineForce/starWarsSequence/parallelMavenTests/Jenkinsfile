@@ -53,7 +53,7 @@ pipeline
                             {
                                 echo "Test: ${testFileName}"
 //                                def label = testFileName.replace(basePath,"")
-                                def filename = testFileName.substring(label.lastIndexOf(File.separator) + 1).replace(".java","")
+                                def filename = testFileName.substring(testFileName.lastIndexOf(File.separator) + 1).replace(".java","")
                                 stage ("Test: ${filename}")
                                 {
                                     tests[filename] =
