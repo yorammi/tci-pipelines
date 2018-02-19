@@ -61,6 +61,7 @@ pipeline
                                         sh "mvn -Dtest=${filename} test"
                                     }
                                 }
+                                sleep(1)
                                 currentIndex++
                             }
                             try
