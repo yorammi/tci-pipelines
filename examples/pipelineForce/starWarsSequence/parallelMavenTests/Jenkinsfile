@@ -1,0 +1,60 @@
+pipeline
+{
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '50'))
+        ansiColor('xterm')
+        timestamps()
+    }
+
+    agent any
+    stages
+    {
+        stage('Setup')
+        {
+            steps
+            {
+                checkout([$class: 'GitSCM', branches: [[name: 'master']],
+                          userRemoteConfigs: [[url: 'https://github.com/tikalk/pipelineForceCode']]
+                ])
+            }
+        }
+        stage('Code build')
+        {
+            steps
+            {
+                withMaven(jdk: 'jdk8u131', maven: 'mvn350')
+                {
+                    dir("java/starWarsSequence")
+                    {
+                        sh "mvn clean install -DskipTests"
+                    }
+                }
+            }
+        }
+        stage('Unit tests')
+        {
+            steps
+            {
+                withMaven(jdk: 'jdk8u131', maven: 'mvn350')
+                {
+                    dir("java/starWarsSequence")
+                    {
+                        sh "find tests -name '*Test.java' > tstFiles"
+                        List<String> tstFiles=readFile('tstFiles').split()
+                        int numberOfFiles = tstFiles.size()
+                        echo "Number of files: ${numberOfFiles}"
+                        sh "mvn test"
+                    }
+                }
+            }
+        }
+    }
+    post
+    {
+        always
+        {
+            archiveArtifacts '**/target/**/starWarsSequence-*.jar'
+        }
+    }
+}
