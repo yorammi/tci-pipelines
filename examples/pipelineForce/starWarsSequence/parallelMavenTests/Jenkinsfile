@@ -2,7 +2,7 @@ pipeline
 {
     options
     {
-        buildDiscarder(logRotator(numToKeepStr: '50'))
+        buildDiscarder(logRotator(numToKeepStr: '3'))
         ansiColor('xterm')
         timestamps()
     }
@@ -40,11 +40,14 @@ pipeline
                 {
                     dir("java/starWarsSequence")
                     {
-                        sh "find tests -name '*Test.java' > tstFiles"
-                        List<String> tstFiles=readFile('tstFiles').split()
-                        int numberOfFiles = tstFiles.size()
-                        echo "Number of files: ${numberOfFiles}"
-                        sh "mvn test"
+                        script
+                        {
+                            sh "find tests -name '*Test.java' > tstFiles"
+                            List<String> tstFiles=readFile('tstFiles').split()
+                            int numberOfFiles = tstFiles.size()
+                            echo "Number of files: ${numberOfFiles}"
+                            sh "mvn test"
+                        }
                     }
                 }
             }
