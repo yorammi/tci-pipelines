@@ -58,7 +58,7 @@ pipeline
                                 {
                                     tests[filename] =
                                     {
-                                        sh "mvn test -Dtest=${testFileName}"
+                                        sh "mvn -Dtest=${testFileName} test"
                                     }
                                 }
                                 currentIndex++
