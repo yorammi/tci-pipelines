@@ -50,13 +50,15 @@ pipeline
                             def tests = [:]
                             for (int i = 0; i < tstFiles.size(); i++) {
                                 testFileName=tstFiles.get(i)
+                                def filePath = testFileName
+                                int index = i
                                 def filename = testFileName.substring(testFileName.lastIndexOf(File.separator) + 1).replace(".java","")
                                 stage ("Test: ${filename}")
                                 {
                                     tests[filename] =
                                     {
-                                        echo "Test: ${filename} Sleep: ${i}"
-                                        sleep(i)
+                                        echo "Test: ${filePath} Sleep: ${index}"
+                                        sleep(index)
                                         sh "mvn -Dtest=${filename} test"
                                     }
                                 }
