@@ -49,19 +49,19 @@ pipeline
 
                             def tests = [:]
                             Integer currentIndex=0
-                            for (String testFileName : tstFiles)
-                            {
+//                            for (String testFileName : tstFiles)
+                            for (int i = 0; i < tstFiles.size(); i++) {
+                                testFileName=tstFiles.get(i)
                                 def filename = testFileName.substring(testFileName.lastIndexOf(File.separator) + 1).replace(".java","")
                                 stage ("Test: ${filename}")
                                 {
                                     tests[filename] =
                                     {
-                                        echo "Test: ${testFileName} Sleep: ${currentIndex}"
-                                        sleep(currentIndex)
+                                        echo "Test: ${testFileName} Sleep: ${i}"
+                                        sleep(i)
                                         sh "mvn -Dtest=${filename} test"
                                     }
                                 }
-                                sleep(1)
                                 currentIndex++
                             }
                             try
