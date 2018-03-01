@@ -1,0 +1,30 @@
+pipeline
+{
+    agent any
+    parameters
+    {
+        string(name: 'CREDENTIAL',
+                description: 'CREDENTIAL ID to discover')
+    }
+    stages
+    {
+        stage('Discover credential')
+        {
+            steps
+            {
+                script
+                {
+                    withCredentials([usernamePassword(credentialsId: CREDENTIAL,
+                                                        passwordVariable: 'CRED_PASSWORD',
+                                                        usernameVariable: 'CRED_USERNAME')])
+                    {
+                        env.USERNAME = CRED_USERNAME
+                        env.PASSWORD = CRED_PASSWORD
+                    }
+                    echo "USERNAME=${env.USERNAME}"
+                    echo "PASSWORD=${env.PASSWORD}"
+                }
+            }
+        }
+    }
+}
