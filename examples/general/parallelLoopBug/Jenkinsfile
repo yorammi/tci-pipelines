@@ -9,19 +9,19 @@ pipeline
             {
                 script
                 {
-                    maxIndex=4
-                    def loopers = [:]
-                    for (int loopIndex = 0; loopIndex < maxIndex; loopIndex++)
+                    maxIndex1=3
+                    def loopers1 = [:]
+                    for (int loopIndex1 = 0; loopIndex1 < maxIndex1; loopIndex1++)
                     {
-                        stage("loop-${loopIndex}")
+                        stage("loop-${loopIndex1}")
                         {
-                            loopers["loop-${loopIndex}"] =
+                            loopers["loop-${loopIndex1}"] =
                             {
-                                echo "loopIndex=${loopIndex}"
+                                echo "loopIndex1=${loopIndex1}"
                             }
                         }
                     }
-                    parallel loopers
+                    parallel loopers1
                 }
             }
         }
@@ -31,20 +31,20 @@ pipeline
             {
                 script
                 {
-                    maxIndex=4
-                    def loopers = [:]
-                    for (int loopIndex = 0; loopIndex < maxIndex; loopIndex++)
+                    maxIndex2=3
+                    def loopers2 = [:]
+                    for (int loopIndex2 = 0; loopIndex2 < maxIndex2; loopIndex2++)
                     {
-                        index=loopIndex
-                        stage("loop-${index}")
+                        index2=loopIndex2
+                        stage("loop-${index2}")
                         {
-                            loopers["loop-${index}"] =
+                            loopers["loop-${index2}"] =
                             {
-                                echo "index=${index}"
+                                echo "index2=${index2}"
                             }
                         }
                     }
-                    parallel loopers
+                    parallel loopers2
                 }
             }
         }
