@@ -21,7 +21,7 @@ pipeline
                             echo "loopIndex=${loopIndex}"
                         }
                     }
-                    parallel testGroups
+                    parallel loopers
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline
                             echo "index=${index}"
                         }
                     }
-                    parallel testGroups
+                    parallel loopers
                 }
             }
         }
