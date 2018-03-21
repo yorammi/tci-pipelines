@@ -9,7 +9,7 @@ pipeline
             {
                 script
                 {
-                    maxIndex1=3
+                    int maxIndex1=3
                     def loopers1 = [:]
                     for (int loopIndex1 = 0; loopIndex1 < maxIndex1; loopIndex1++)
                     {
@@ -31,11 +31,12 @@ pipeline
             {
                 script
                 {
-                    maxIndex2=3
+                    int maxIndex2=3
                     def loopers2 = [:]
                     for (int loopIndex2 = 0; loopIndex2 < maxIndex2; loopIndex2++)
                     {
-                        index2=loopIndex2
+                        int index2=loopIndex2
+                        echo "index2=${index2}"
                         stage("loop-${index2}")
                         {
                             loopers2["loop-${index2}"] =
