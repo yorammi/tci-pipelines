@@ -15,7 +15,7 @@ pipeline
                     {
                         stage("loop-${loopIndex1}")
                         {
-                            loopers["loop-${loopIndex1}"] =
+                            loopers1["loop-${loopIndex1}"] =
                             {
                                 echo "loopIndex1=${loopIndex1}"
                             }
@@ -38,7 +38,7 @@ pipeline
                         index2=loopIndex2
                         stage("loop-${index2}")
                         {
-                            loopers["loop-${index2}"] =
+                            loopers2["loop-${index2}"] =
                             {
                                 echo "index2=${index2}"
                             }
