@@ -13,6 +13,7 @@ pipeline
                     def loopers1 = [:]
                     for (int loopIndex1 = 0; loopIndex1 < maxIndex1; loopIndex1++)
                     {
+                        echo "loopIndex1=${loopIndex1}"
                         stage("loop-${loopIndex1}")
                         {
                             loopers1["loop-${loopIndex1}"] =
