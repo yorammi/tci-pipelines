@@ -1,0 +1,48 @@
+pipeline
+{
+    agent any
+    environment
+    {
+        MAX=4
+    }
+    stages
+    {
+        stage('Explore bug')
+        {
+            steps
+            {
+                script
+                {
+                    def loopers = [:]
+                    for (int loopIndex = 0; loopIndex < MAX; loopIndex++)
+                    {
+                        loopers["loop-${loopIndex}"] =
+                        {
+                            echo "loopIndex=${loopIndex}"
+                        }
+                    }
+                    parallel testGroups
+                }
+            }
+        }
+        stage('Bug workaround')
+        {
+            steps
+            {
+                script
+                {
+                    def loopers = [:]
+                    for (int loopIndex = 0; loopIndex < MAX; loopIndex++)
+                    {
+                        index=loop
+                        loopers["loop-${index}"] =
+                        {
+                            echo "index=${index}"
+                        }
+                    }
+                    parallel testGroups
+                }
+            }
+        }
+    }
+}
