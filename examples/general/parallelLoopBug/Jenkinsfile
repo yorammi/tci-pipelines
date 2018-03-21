@@ -1,10 +1,6 @@
 pipeline
 {
     agent any
-    environment
-    {
-        MAX=4
-    }
     stages
     {
         stage('Explore bug')
@@ -13,13 +9,16 @@ pipeline
             {
                 script
                 {
-                    maxIndex=MAX
+                    maxIndex=4
                     def loopers = [:]
                     for (int loopIndex = 0; loopIndex < maxIndex; loopIndex++)
                     {
-                        loopers["loop-${loopIndex}"] =
+                        stage("loop-${loopIndex}")
                         {
-                            echo "loopIndex=${loopIndex}"
+                            loopers["loop-${loopIndex}"] =
+                            {
+                                echo "loopIndex=${loopIndex}"
+                            }
                         }
                     }
                     parallel loopers
@@ -32,14 +31,17 @@ pipeline
             {
                 script
                 {
-                    maxIndex=MAX
+                    maxIndex=4
                     def loopers = [:]
                     for (int loopIndex = 0; loopIndex < maxIndex; loopIndex++)
                     {
                         index=loopIndex
-                        loopers["loop-${index}"] =
+                        stage("loop-${index}")
                         {
-                            echo "index=${index}"
+                            loopers["loop-${index}"] =
+                            {
+                                echo "index=${index}"
+                            }
                         }
                     }
                     parallel loopers
