@@ -14,12 +14,9 @@ pipeline
                     for (int loopIndex1 = 0; loopIndex1 < maxIndex1; loopIndex1++)
                     {
                         echo "loopIndex1=${loopIndex1}"
-                        stage("loop-${loopIndex1}")
+                        loopers1["loop-${loopIndex1}"] =
                         {
-                            loopers1["loop-${loopIndex1}"] =
-                            {
-                                echo "loopIndex1=${loopIndex1}"
-                            }
+                            echo "loopIndex1=${loopIndex1}"
                         }
                     }
                     parallel loopers1
@@ -38,12 +35,9 @@ pipeline
                     {
                         int index2=loopIndex2
                         echo "index2=${index2}"
-                        stage("loop-${index2}")
+                        loopers2["loop-${index2}"] =
                         {
-                            loopers2["loop-${index2}"] =
-                            {
-                                echo "index2=${index2}"
-                            }
+                            echo "index2=${index2}"
                         }
                     }
                     parallel loopers2
