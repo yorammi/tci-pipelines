@@ -13,8 +13,9 @@ pipeline
             {
                 script
                 {
+                    maxIndex=MAX
                     def loopers = [:]
-                    for (int loopIndex = 0; loopIndex < MAX; loopIndex++)
+                    for (int loopIndex = 0; loopIndex < maxIndex; loopIndex++)
                     {
                         loopers["loop-${loopIndex}"] =
                         {
@@ -31,10 +32,11 @@ pipeline
             {
                 script
                 {
+                    maxIndex=MAX
                     def loopers = [:]
-                    for (int loopIndex = 0; loopIndex < MAX; loopIndex++)
+                    for (int loopIndex = 0; loopIndex < maxIndex; loopIndex++)
                     {
-                        index=loop
+                        index=loopIndex
                         loopers["loop-${index}"] =
                         {
                             echo "index=${index}"
