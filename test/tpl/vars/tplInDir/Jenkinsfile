@@ -5,7 +5,6 @@ pipeline
     parameters
     {
         string(name: 'DIR', defaultValue: '.', description: 'relative directory to work in')
-        booleanParam(name: 'CD', defaultValue: false, description: 'Work in the relative directory?')
     }
 
     agent any
@@ -16,7 +15,7 @@ pipeline
         {
             steps
             {
-                tplInDir(CD,DIR)
+                tplInDir(false,DIR)
                 {
                     sh "pwd"
                 }
