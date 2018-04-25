@@ -15,11 +15,14 @@ pipeline
         {
             steps
             {
-                tplInDir(false,DIR)
+                script
                 {
+                    tplInDir(false,DIR)
+                    {
+                        sh "pwd"
+                    }
                     sh "pwd"
                 }
-                sh "pwd"
             }
         }
     }
