@@ -15,10 +15,10 @@ pipeline
         {
             steps
             {
-                tplInDir(false,DIR)
-                {
-                    sh "pwd"
-                }
+//                tplInDir(false,DIR)
+//                {
+//                    sh "pwd"
+//                }
                 sh "pwd"
             }
         }
