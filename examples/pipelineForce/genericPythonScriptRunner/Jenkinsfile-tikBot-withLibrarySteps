@@ -18,7 +18,7 @@ pipeline
     }
     agent
     {
-        label 'linux-host-slave'
+        label 'linux-docker-host-slave'
     }
     stages
     {
