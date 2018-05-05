@@ -1,3 +1,5 @@
+@Library("tikal-pipelib") _
+
 pipeline
 {
     parameters
@@ -18,26 +20,13 @@ pipeline
     {
         label 'linux-host-slave'
     }
-//    agent
-//    {
-//        docker
-//        {
-//            image 'python:2.7'
-//            args "-u root"
-//        }
-//    }
     stages
     {
         stage('Setup')
         {
             steps
             {
-                checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: BRANCH]],
-                        userRemoteConfigs: [[url: "${REPOSITORY_URL}",
-                                             credentialsId: "${GIT_REPO_CRED}"]]
-                ])
+                tplRepositoryDirectoryCheckout(REPOSITORY_URL,BRANCH,GIT_REPO_CRED)
             }
         }
         stage('Script run')
@@ -48,21 +37,11 @@ pipeline
                 {
                     docker.image("python:2.7").inside('-u root')
                     {
-                        sh "pip install -r ${REQUIREMENTS_FILE}"
-                        sh "python ./${PYTHON_SCRIPT_FILE}"
+                        tplPythonRequirements(REQUIREMENTS_FILE)
+                        tplPythonScriptRun(PYTHON_SCRIPT_FILE)
                     }
                 }
             }
         }
-//        stage('Run script')
-//        {
-//            steps
-//            {
-//                script
-//                {
-//                    sh "python ./${PYTHON_SCRIPT_FILE}"
-//                }
-//            }
-//        }
     }
 }
