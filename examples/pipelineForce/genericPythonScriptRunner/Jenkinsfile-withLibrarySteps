@@ -44,7 +44,6 @@ pipeline
         {
             steps
             {
-                tplPythonScriptRun(PYTHON_SCRIPT_FILE)
             }
         }
     }
