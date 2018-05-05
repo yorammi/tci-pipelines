@@ -1,0 +1,57 @@
+pipeline
+{
+    parameters
+    {
+        string(name: 'REPOSITORY_URL',
+                description: 'URL to GIT repository')
+        string(name: 'GIT_REPO_CRED',
+                description: 'Credential name of GIT user')
+        string(name: 'BRANCH',
+                defaultValue: 'master',
+                description: 'Name of branch')
+        string(name: 'REQUIREMENTS_FILE',
+                description: 'Relative path to the requirements file')
+        string(name: 'PYTHON_SCRIPT_FILE',
+                description: 'Relative path to the python script')
+    }
+    agent
+    {
+        docker
+        {
+            image 'python:2.7'
+            args "-u root"
+        }
+    }
+    stages
+    {
+        stage('Setup')
+        {
+            steps
+            {
+                checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: BRANCH]],
+                        userRemoteConfigs: [[url: "${REPOSITORY_URL}",
+                                             credentialsId: "${GIT_REPO_CRED}"]]
+                ])
+            }
+        }
+        stage('Script run')
+        {
+            steps
+            {
+                sh "pip install -r ${REQUIREMENTS_FILE}"
+            }
+        }
+        stage('Run script')
+        {
+            steps
+            {
+                script
+                {
+                    sh "python ./${PYTHON_SCRIPT_FILE}"
+                }
+            }
+        }
+    }
+}
