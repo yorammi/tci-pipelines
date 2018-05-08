@@ -1,0 +1,82 @@
+pipeline
+{
+    parameters
+    {
+        string(name: 'PARAM', defaultValue: '', description: 'This is a parameter')
+    }
+
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '50'))
+        ansiColor('xterm')
+        timestamps()
+    }
+
+    agent any
+    stages
+    {
+        stage('Setup')
+        {
+            steps
+            {
+                script
+                {
+                    currentBuild.displayName = "#${BUILD_ID} | ${PARAM}"
+                }
+                checkout([$class: 'GitSCM', branches: [[name: 'master']],
+                          userRemoteConfigs: [[url: 'https://github.com/tikalk/test']]
+                ])
+            }
+        }
+        stage('Code build')
+        {
+            steps
+            {
+                withMaven(jdk: 'jdk8u131', maven: 'mvn350')
+                {
+                    sh "mvn clean install -DskipTests"
+                }
+            }
+        }
+        stage('Unit tests')
+        {
+            steps
+            {
+                withMaven(jdk: 'jdk8u131', maven: 'mvn350')
+                {
+                    sh "mvn test"
+                }
+            }
+        }
+        stage('Some shell commands')
+        {
+            steps
+            {
+                sh "echo ${PARAM}"
+            }
+        }
+        stage('Docker build')
+        {
+            steps
+            {
+                // assuming you have a Dockerfile in your repository root folder
+                docker.build("tikalk/testDocker")
+            }
+        }
+    }
+    post
+    {
+        always
+        {
+            archiveArtifacts '**/target/**/*.jar'
+        }
+        success
+        {
+            echo "COOL!!!"
+        }
+        failure
+        {
+            echo "FAILED!!!"
+        }
+    }
+}
