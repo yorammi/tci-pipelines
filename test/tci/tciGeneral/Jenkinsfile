@@ -6,7 +6,7 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    tciGeneral.echo "test tciGeneral.echo"
+                    tciGeneral.timedEcho "test tciGeneral.timedEcho"
                 }
             }
         }
