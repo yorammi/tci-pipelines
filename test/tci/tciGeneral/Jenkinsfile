@@ -1,0 +1,14 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'docker-slave' }
+    stages {
+        stage("test") {
+            steps {
+                script {
+                    tciGeneral.echo "test tciGeneral.echo"
+                }
+            }
+        }
+    }
+}
