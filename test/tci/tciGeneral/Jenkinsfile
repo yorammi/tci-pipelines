@@ -6,8 +6,9 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    tplEcho "test tciGeneral.timedEcho"
+                    tplEcho "test tciGeneral.deprecatedMessage"
                     tciGeneral.timedEcho "test tciGeneral.timedEcho"
+                    tciGeneral.setStatusByLogText("test")
                 }
             }
         }
