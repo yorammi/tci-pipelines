@@ -6,6 +6,7 @@ pipeline {
         stage("test") {
             steps {
                 script {
+                    tplEcho "test tciGeneral.timedEcho"
                     tciGeneral.timedEcho "test tciGeneral.timedEcho"
                 }
             }
