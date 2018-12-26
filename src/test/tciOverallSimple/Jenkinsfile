@@ -1,0 +1,23 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    stages {
+        stage("TCI overall") {
+            steps {
+                script {
+                    def job_names=['test-tciGeneral']
+                    def jobs = [:]
+
+                    job_names.each{ jobs[it] = {
+                            stage(it) {
+                                build job: it, wait: true
+                            }
+                        }
+                    }
+                    parallel jobs
+                }
+            }
+        }
+    }
+}
