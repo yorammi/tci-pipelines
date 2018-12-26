@@ -1,0 +1,31 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    stages {
+        stage("test") {
+            steps {
+                script {
+                    def buildUserDisplayName = tciBuildUser.getBuildUserDisplayName()
+                    echo "[Display name] ${buildUserDisplayName}"
+                    def buildUserFirstName = tciBuildUser.getBuildUserFirstName()
+                    echo "[First name] ${buildUserFirstName}"
+                    def buildUserLastName = tciBuildUser.getBuildUserLastName()
+                    echo "[Last name] ${buildUserLastName}"
+                    def buildUserID = tciBuildUser.getBuildUserID()
+                    echo "[ID] ${buildUserID}"
+                    def buildUserEmail = tciBuildUser.getBuildUserEmail()
+                    echo "[Email] ${buildUserEmail}"
+                    if (buildUserDisplayName != env.BUILD_USER ||
+                            buildUserFirstName != env.BUILD_USER_FIRST_NAME ||
+                            buildUserLastName != env.BUILD_USER_LAST_NAME ||
+                            buildUserID != env.BUILD_USER_ID ||
+                            buildUserEmail != env.BUILD_USER_EMAIL) {
+                        echo "[ERROR] Build user values assertion failed!"
+                        currentBuild.result = "FAILURE"
+                    }
+                }
+            }
+        }
+    }
+}
