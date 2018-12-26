@@ -9,6 +9,8 @@ pipeline {
                     tplEcho "test tciGeneral.deprecatedMessage"
                     tciGeneral.timedEcho "test tciGeneral.timedEcho"
                     tciGeneral.setStatusByLogText("Text that will probably won't be in the log")
+                    boolean found = tciGeneral.setStatusByLogText("timedEcho")
+                    tciGeneral.timedEcho "setStatusByLogText returned ${setStatusByLogText}"
                 }
             }
         }
