@@ -6,7 +6,7 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    tciGeneral.clearWorkspaceAsRoot
+                    tciGeneral.clearWorkspaceAsRoot()
                     tplEcho "test tciGeneral.deprecatedMessage"
                     tciGeneral.timedEcho "test tciGeneral.timedEcho"
                     tciGeneral.setStatusByLogText("Text that will probably won't be in the log")
