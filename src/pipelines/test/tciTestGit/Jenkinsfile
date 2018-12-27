@@ -13,7 +13,7 @@ pipeline {
                     tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/tci-master.git",
                             dir: 'tci-master',
                             branch: 'tci-master')
-                    sh "cat tci-master/examples/docker/jenkins_server.sh > dev/null"
+                    sh "cat tci-master/examples/docker/jenkins_server.sh > /dev/null"
                 }
             }
         }
