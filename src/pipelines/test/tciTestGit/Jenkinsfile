@@ -1,0 +1,15 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    stages {
+        stage("test") {
+            steps {
+                script {
+                    tciGit.checkout(url:'git@github.com:TikalCI/tci-master.git',dir:'tci-master',branch:'tci-master')
+                    sh "cat tci-master/examples/docker/jenkins_server.sh"
+                }
+            }
+        }
+    }
+}
