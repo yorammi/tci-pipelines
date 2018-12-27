@@ -1,0 +1,18 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent any
+    parameters {
+        string (name:'JOB_NAME',defaultValue:'',description:'Job name to set the next build number')
+        string(name: 'NEXT_BUILD_NUMBER', defaultValue: "1",description:'Next build number. NOTE: it must be higher than the current build number!' )
+    }
+    stages {
+        stage ('`Set job next build number') {
+            steps {
+                script {
+                    tciJobs.setJobNextBuildNumber(params.JOB_NAME,params.NEXT_BUILD_NUMBER.toInteger())
+                }
+            }
+        }
+    }
+}
