@@ -2,6 +2,9 @@
 
 pipeline {
     agent any
+    options {
+        timestamps()
+    }
     parameters {
         string (name:'JOB_NAME',defaultValue:'',description:'Job name to set status')
         booleanParam(name: 'ENABLE', defaultValue: true,description:'Check for enable, uncheck for disable' )

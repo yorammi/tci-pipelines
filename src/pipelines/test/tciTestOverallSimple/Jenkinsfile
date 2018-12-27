@@ -2,6 +2,10 @@
 
 pipeline {
     agent { label 'tci-jnlp-node' }
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+    }
     stages {
         stage("TCI overall") {
             steps {

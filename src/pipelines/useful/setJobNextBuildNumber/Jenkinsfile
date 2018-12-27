@@ -2,6 +2,9 @@
 
 pipeline {
     agent any
+    options {
+        timestamps()
+    }
     parameters {
         string (name:'JOB_NAME',defaultValue:'',description:'Job name to set the next build number')
         string(name: 'NEXT_BUILD_NUMBER', defaultValue: "1",description:'Next build number. NOTE: it must be higher than the current build number!' )
