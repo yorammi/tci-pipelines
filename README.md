@@ -1,4 +1,4 @@
-# TCI pipelines - Tikal Jenkins-based CI solution Jenkins pipelines
+# TCI pipelines (tci-pipelines) - Tikal Jenkins-based CI solution Jenkins pipelines
 ![tci-pipelines](src/resources/images/tci-pipelines.png)
 
 ### ***TCI - Tikal Jenkins-based CI solution***
