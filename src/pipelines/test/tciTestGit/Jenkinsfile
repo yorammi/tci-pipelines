@@ -13,8 +13,7 @@ pipeline {
                     tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/tci-master.git",
                             dir: 'tci-master',
                             branch: 'test')
-                    sh "ls -laR"
-                    sh "cat test/test.txt > /dev/null"
+                    sh "cat tci-master/test/test.txt > /dev/null"
                     String changes = tciGit.getChangesList()
                     echo "Git changes: ${changes}"
                 }
