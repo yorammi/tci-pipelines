@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     def buildUserDisplayName = tciBuildUser.getBuildUserDisplayName()
-                    currentBuild.displayName += "[Activated by] ${buildUserDisplayName}"
+                    currentBuild.displayName += " - activated by: ${buildUserDisplayName}"
                 }
             }
         }
