@@ -1,0 +1,19 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+    }
+    stages {
+        stage("Sanity") {
+            steps {
+                script {
+                    def buildUserDisplayName = tciBuildUser.getBuildUserDisplayName()
+                    currentBuild.displayName += "[Activated by] ${buildUserDisplayName}"
+                }
+            }
+        }
+    }
+}
