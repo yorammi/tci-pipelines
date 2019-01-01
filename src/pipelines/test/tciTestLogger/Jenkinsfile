@@ -12,7 +12,7 @@ pipeline {
                 script {
                     tciGeneral.timedEcho("[tciGeneral.timedEcho] This message should be shown in all use cases.")
                     tciLogger.info("[tciLogger.info] This message should be shown in all use cases.")
-                    tciLogger.debug("[tciLogger.info] This message should be shown only on debug mode.")
+                    tciLogger.debug("[tciLogger.debug] This message should be shown only on debug mode.")
                 }
             }
         }
