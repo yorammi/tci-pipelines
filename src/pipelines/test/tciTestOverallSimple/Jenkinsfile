@@ -10,7 +10,7 @@ pipeline {
         stage("TCI overall") {
             steps {
                 script {
-                    def job_names=['test-tciGeneral',"test-tciBuildUser","test-tciJobs","test-tciGit"]
+                    def job_names=['test-tciGeneral',"test-tciBuildUser","test-tciJobs","test-tciGit","test-tciEnv","test-tciNotifications","test-tciPython"]
                     def jobs = [:]
 
                     job_names.each{ jobs[it] = {
