@@ -17,7 +17,7 @@ pipeline {
                     String changes = tciGit.getChangesList()
                     echo "Git changes: ${changes}"
                     String changers = tciGit.getChangersList()
-                    echo "Git changers: ${changers}"
+                    echo "[Git changers]\n\t${changers}"
                 }
             }
         }
