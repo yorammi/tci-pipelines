@@ -16,6 +16,8 @@ pipeline {
                     sh "cat tci-master/test/test.txt > /dev/null"
                     String changes = tciGit.getChangesList()
                     echo "Git changes: ${changes}"
+                    String changers = tciGit.getChangersList()
+                    echo "Git changers: ${changers}"
                 }
             }
         }
