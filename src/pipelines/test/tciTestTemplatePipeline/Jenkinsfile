@@ -1,3 +1,4 @@
 @Library ("tci-library") _
 
-tciPipelines.templatePipeline()
+tciTemplatePipelines.oneStepPipeline()
+
