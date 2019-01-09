@@ -1,5 +1,4 @@
 @Library ("tci-library") _
 
-//tciTemplatePipelines()
-tciPipelines.oneStagePipelines()
+tciTemplatePipelines()
 
