@@ -55,14 +55,17 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry() {
-                        dockerImage.push()
-                    }
+                    dockerImage.push()
 
 //                    docker.push("tikalci/tci-master-${params.TYPE}:latest")
 //                    docker.push("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
                 }
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts "plugins.txt"
         }
     }
 }
