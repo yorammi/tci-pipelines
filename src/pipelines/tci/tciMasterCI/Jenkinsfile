@@ -1,5 +1,7 @@
 @Library ("tci-library") _
 
+def dockerImage
+
 pipeline {
     agent { label 'tci-jnlp-node' }
     options {
@@ -16,6 +18,10 @@ pipeline {
                 defaultValue: '',
                 description: 'tci-master version',
                 name : 'VERSION')
+        booleanParam (
+                defaultValue: false,
+                description: 'Publish the image to DockerHub?',
+                name : 'PUBLISH')
     }
 
     stages {
@@ -38,8 +44,8 @@ pipeline {
         stage("Docker build") {
             steps {
                 script {
-                    docker.build("tikalci/tci-master-${params.TYPE}:latest","tci-bloody-jenkins")
-                    docker.tag("tikalci/tci-master-${params.TYPE}:latest","tikalci/tci-master-${params.TYPE}:${params.VERSION}")
+                    dockerImage = docker.build("tikalci/tci-master-${params.TYPE}:latest","tci-bloody-jenkins")
+                    dockerImage.tag("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
                 }
             }
         }
@@ -49,8 +55,12 @@ pipeline {
             }
             steps {
                 script {
-                    docker.push("tikalci/tci-master-${params.TYPE}:latest")
-                    docker.push("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
+                    docker.withRegistry() {
+                        dockerImage.push()
+                    }
+
+//                    docker.push("tikalci/tci-master-${params.TYPE}:latest")
+//                    docker.push("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
                 }
             }
         }
