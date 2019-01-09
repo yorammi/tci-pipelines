@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build("tikalci/tci-master-${params.TYPE}:latest","tci-bloody-jenkins")
-                    dockerImage.tag("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
+                    dockerImage.tag("${params.VERSION}")
                 }
             }
         }
