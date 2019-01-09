@@ -17,6 +17,7 @@ pipeline {
                                    "test-tciEnv",
                                    "test-tciNotifications",
                                    "test-tciPython",
+                                   "test-tciTemplatePipeline",
                                    "test-tciLogger"]
                     def jobs = [:]
 
