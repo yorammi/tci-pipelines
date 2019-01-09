@@ -55,10 +55,11 @@ pipeline {
             }
             steps {
                 script {
-                    dockerImage.push()
 
-//                    docker.push("tikalci/tci-master-${params.TYPE}:latest")
-//                    docker.push("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        dockerImage.push("latest")
+                        dockerImage.push("${params.VERSION}")
+                    }
                 }
             }
         }
