@@ -38,22 +38,21 @@ pipeline {
         stage("Docker build") {
             steps {
                 script {
-                    sh '''
-                            docker build -t tikalci/tci-master-${TYPE}:latest tci-bloody-jenkins
-                            docker tag tikalci/tci-master-${TYPE}:latest tikalci/tci-master-${TYPE}:${VERSIOPN}
-                        '''
+                    docker.build("tikalci/tci-master-${params.TYPE}:latest","tci-bloody-jenkins")
+                    docker.tag("tikalci/tci-master-${params.TYPE}:latest","tikalci/tci-master-${params.TYPE}:${params.VERSION}")
                 }
             }
         }
-//            stage("Publish") {
-//                steps {
-//                    script {
-//                        sh '''
-//                            docker push tikalci/tci-master-${TYPE}:latest
-//                            docker push tikalci/tci-master-${TYPE}:${VERSIOPN}
-//                        '''
-//                    }
-//                }
-//            }
+        stage("Publish") {
+            when {
+                expression { return params.PUBLISH }
+            }
+            steps {
+                script {
+                    docker.push("tikalci/tci-master-${params.TYPE}:latest")
+                    docker.push("tikalci/tci-master-${params.TYPE}:${params.VERSION}")
+                }
+            }
+        }
     }
 }
