@@ -39,11 +39,13 @@ pipeline {
             }
             steps {
                 script {
-                    sh '''
-                        git tag -f ${params.VERSION}
-                        git tag -f latest
-                        git push -f origin --tags
-                    '''
+                    dir (params.REPO) {
+                        sh '''
+                            git tag -f ${params.VERSION}
+                            git tag -f latest
+                            git push -f origin --tags
+                        '''
+                    }
                 }
             }
         }
@@ -53,11 +55,13 @@ pipeline {
             }
             steps {
                 script {
-                    sh '''
-                        git checkout ${params.VERSION}
-                        git tag -f lts
-                        git push -f origin --tags
-                    '''
+                    dir (params.REPO) {
+                        sh '''
+                            git checkout ${params.VERSION}
+                            git tag -f lts
+                            git push -f origin --tags
+                        '''
+                    }
                 }
             }
         }
