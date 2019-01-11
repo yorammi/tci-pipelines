@@ -1,0 +1,70 @@
+@Library ("tci-library") _
+
+def dockerImage
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        ansiColor('xterm')
+    }
+    parameters {
+        choice (
+                choices: '\ntci-library\ntci-pipelines',
+                description: 'Which TCI repository to tag',
+                name : 'REPO')
+        string (
+                defaultValue: '',
+                description: 'Version',
+                name : 'VERSION')
+        booleanParam (
+                defaultValue: false,
+                description: 'Tag a new version or set the version as LTS',
+                name : 'SET_AS_LTS')
+    }
+
+    stages {
+        stage("Setup") {
+            steps {
+                script {
+                    currentBuild.displayName += " [REPO] ${params.REPO} [VERSION] ${params.VERSION} [Set as LTS?] ${params.SET_AS_LTS}"
+                    tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/"+params.REPO+".git", dir: ${params.REPO}, branch: "master")
+                }
+            }
+        }
+        stage("Tag version") {
+            when {
+                expression { return ! params.SET_AS_LTS }
+            }
+            steps {
+                script {
+                    sh '''
+                        git tag -f ${params.VERSION}
+                        git tag -f latest
+                        git push -f origin --tags
+                    '''
+                }
+            }
+        }
+        stage("Tag version as LTS") {
+            when {
+                expression { return params.SET_AS_LTS }
+            }
+            steps {
+                script {
+                    sh '''
+                        git checkout ${params.VERSION}
+                        git tag -f lts
+                        git push -f origin --tags
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts "plugins.txt"
+        }
+    }
+}
