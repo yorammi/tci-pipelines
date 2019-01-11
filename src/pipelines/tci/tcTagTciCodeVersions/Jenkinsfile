@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     currentBuild.displayName += " [REPO] ${params.REPO} [VERSION] ${params.VERSION} [Set as LTS?] ${params.SET_AS_LTS}"
-                    tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/"+params.REPO+".git", dir: ${params.REPO}, branch: "master")
+                    tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/"+params.REPO+".git", dir: params.REPO, branch: "master")
                 }
             }
         }
