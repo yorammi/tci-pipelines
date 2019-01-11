@@ -40,12 +40,11 @@ pipeline {
             steps {
                 script {
                     dir (params.REPO) {
-                        tciLogger.info "git tag -f ${params.VERSION}"
-                        sh "git tag -f ${params.VERSION}"
-                        tciLogger.info "git tag -f latest"
-                        sh "git tag -f latest"
-                        tciLogger.info "git push -f origin --tags"
-                        sh "git push -f origin --tags"
+                        sshagent (credentials: ['gitsshkey']) {
+                            sh "git tag -f ${params.VERSION}"
+                            sh "git tag -f latest"
+                            sh "git push -f origin --tags"
+                        }
                     }
                 }
             }
@@ -57,9 +56,11 @@ pipeline {
             steps {
                 script {
                     dir (params.REPO) {
-                        sh "git checkout ${params.VERSION}"
-                        sh "git tag -f lts"
-                        sh "git push -f origin --tags"
+                        sshagent (credentials: ['gitsshkey']) {
+                            sh "git checkout ${params.VERSION}"
+                            sh "git tag -f lts"
+                            sh "git push -f origin --tags"
+                        }
                     }
                 }
             }
