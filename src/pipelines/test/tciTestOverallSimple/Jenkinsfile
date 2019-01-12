@@ -18,7 +18,8 @@ pipeline {
                                    "test-tciNotifications",
                                    "test-tciPython",
                                    "test-tciTemplatePipeline",
-                                   "test-tciLogger"]
+                                   "test-tciLogger",
+                                   "test-mavenCIJob"]
                     def jobs = [:]
 
                     job_names.each{ jobs[it] = {
