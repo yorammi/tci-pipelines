@@ -19,6 +19,7 @@ pipeline {
                                    "test-tciPython",
                                    "test-tciTemplatePipeline",
                                    "test-tciLogger",
+                                   "test-tciSecurity",
                                    "test-mavenCIJob"]
                     def jobs = [:]
 
