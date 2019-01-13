@@ -1,6 +1,7 @@
 @Library ("tci-library") _
 
 import tci.multiJob.phase
+import tci.multiJob.stepsBlock
 
 pipeline {
     agent { label 'tci-jnlp-node' }
@@ -12,7 +13,7 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    def testPhase = new phase()
+                    def testPhase = new phase(this)
                     phase.run()
                 }
             }
