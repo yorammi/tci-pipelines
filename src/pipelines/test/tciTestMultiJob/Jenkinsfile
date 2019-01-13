@@ -27,11 +27,7 @@ pipeline {
                     def testPhase = new phase(this)
 
                     job_names.each {
-                        jobs[it] = {
-                            stage(it) {
-                                testPhase.addJob(jobName: it)
-                            }
-                        }
+                        testPhase.addJob(jobName: it)
                     }
                     testPhase.run()
                 }
