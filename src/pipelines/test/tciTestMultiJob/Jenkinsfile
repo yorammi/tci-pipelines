@@ -13,6 +13,9 @@ pipeline {
             steps {
                 script {
                     def job_names=['test-tciEnv',
+                                   "test-tciLogger",
+                                   "test-tciPython",
+                                   "test-tciLogger",
                                    "test-tciSecurity"]
 //                    def job_names=['test-tciGeneral',
 //                                   "test-tciBuildUser",
