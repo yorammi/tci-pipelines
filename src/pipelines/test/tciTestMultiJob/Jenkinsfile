@@ -25,7 +25,7 @@ pipeline {
 //                                   "test-tciLogger",
 //                                   "test-tciSecurity",
 //                                   "test-mavenCIJob"]
-                    def testPhase = new phase(this)
+                    def testPhase = new phase(this, true)
 
                     for (item in job_names) {
                         testPhase.addJob(jobName: item)
