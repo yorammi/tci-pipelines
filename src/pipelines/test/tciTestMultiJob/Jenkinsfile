@@ -25,9 +25,11 @@ pipeline {
                                    "test-mavenCIJob"]
                     def testPhase = new phase(this)
 
-                    job_names.each { job ->
-                        testPhase.addJob(jobName: job)
+                    for (item in job_names) {
+                        String currentJobName = item
+                        testPhase.addJob(jobName: currentJobName)
                     }
+
                     testPhase.run()
                 }
             }
