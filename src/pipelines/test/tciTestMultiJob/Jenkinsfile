@@ -14,6 +14,7 @@ pipeline {
             steps {
                 script {
                     def testPhase = new phase(this)
+                    testPhase.addJob(jobName: 'test-tciEnv')
                     testPhase.run()
                 }
             }
