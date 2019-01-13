@@ -1,7 +1,6 @@
 @Library ("tci-library") _
 
 import tci.multiJob.phase
-import tci.multiJob.stepsBlock
 
 pipeline {
     agent { label 'tci-jnlp-node' }
