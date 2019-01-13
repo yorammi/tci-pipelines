@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     def testPhase = new phase(this)
-                    testPhase.addJob(jobName: 'test-tciEnv')
+                    testPhase.addJob(jobName: 'test-tciGit')
                     testPhase.run()
                 }
             }
