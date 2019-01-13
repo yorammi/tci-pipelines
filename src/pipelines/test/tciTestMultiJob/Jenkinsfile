@@ -13,9 +13,26 @@ pipeline {
         stage("test") {
             steps {
                 script {
+                    def job_names=['test-tciGeneral',
+                                   "test-tciBuildUser",
+                                   "test-tciJobs",
+                                   "test-tciGit",
+                                   "test-tciEnv",
+                                   "test-tciNotifications",
+                                   "test-tciPython",
+                                   "test-tciTemplatePipeline",
+                                   "test-tciLogger",
+                                   "test-tciSecurity",
+                                   "test-mavenCIJob"]
                     def testPhase = new phase(this)
-                    testPhase.addJob(jobName: 'test-tciGit')
-                    testPhase.addJob(jobName: 'test-tciGit')
+
+                    job_names.each {
+                        jobs[it] = {
+                            stage(it) {
+                                testPhase.addJob(jobName: it)
+                            }
+                        }
+                    }
                     testPhase.run()
                 }
             }
