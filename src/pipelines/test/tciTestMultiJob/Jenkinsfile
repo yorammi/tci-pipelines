@@ -27,7 +27,6 @@ pipeline {
                     def testPhase = new phase(this)
 
                     job_names.each { job ->
-                        echo job
                         testPhase.addJob(jobName: job)
                     }
                     testPhase.run()
