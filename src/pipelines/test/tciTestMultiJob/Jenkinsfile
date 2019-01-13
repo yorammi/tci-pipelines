@@ -15,6 +15,7 @@ pipeline {
                 script {
                     def testPhase = new phase(this)
                     testPhase.addJob(jobName: 'test-tciGit')
+                    testPhase.addJob(jobName: 'test-tciGit')
                     testPhase.run()
                 }
             }
