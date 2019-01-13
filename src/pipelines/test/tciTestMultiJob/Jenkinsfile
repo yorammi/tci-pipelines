@@ -26,9 +26,9 @@ pipeline {
                                    "test-mavenCIJob"]
                     def testPhase = new phase(this)
 
-                    job_names.each {
-                        echo it
-                        testPhase.addJob(jobName: it)
+                    job_names.each { job ->
+                        echo job
+                        testPhase.addJob(jobName: job)
                     }
                     testPhase.run()
                 }
