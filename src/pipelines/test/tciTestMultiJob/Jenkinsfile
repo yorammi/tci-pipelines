@@ -13,11 +13,8 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    echo "before phase constructor"
                     def testPhase = new phase(this)
-                    echo "before phase run"
                     testPhase.run()
-                    echo "after phase run"
                 }
             }
         }
