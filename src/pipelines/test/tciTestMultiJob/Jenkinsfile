@@ -12,22 +12,17 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    def job_names=['test-tciEnv',
-                                   "test-tciLogger",
+                    def job_names=['test-tciGeneral',
+                                   "test-tciBuildUser",
+                                   "test-tciJobs",
+                                   "test-tciGit",
+                                   "test-tciEnv",
+                                   "test-tciNotifications",
                                    "test-tciPython",
+                                   "test-tciTemplatePipeline",
                                    "test-tciLogger",
-                                   "test-tciSecurity"]
-//                    def job_names=['test-tciGeneral',
-//                                   "test-tciBuildUser",
-//                                   "test-tciJobs",
-//                                   "test-tciGit",
-//                                   "test-tciEnv",
-//                                   "test-tciNotifications",
-//                                   "test-tciPython",
-//                                   "test-tciTemplatePipeline",
-//                                   "test-tciLogger",
-//                                   "test-tciSecurity",
-//                                   "test-mavenCIJob"]
+                                   "test-tciSecurity",
+                                   "test-mavenCIJob"]
                     def testPhase = new phase(this, true)
 
                     for (item in job_names) {
