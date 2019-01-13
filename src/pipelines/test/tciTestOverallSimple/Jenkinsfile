@@ -1,5 +1,7 @@
 @Library ("tci-library") _
 
+import tci.multiJob.phase
+
 pipeline {
     agent { label 'tci-jnlp-node' }
     options {
@@ -7,7 +9,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '30'))
     }
     stages {
-        stage("TCI overall") {
+        stage("test") {
             steps {
                 script {
                     def job_names=['test-tciGeneral',
@@ -21,15 +23,13 @@ pipeline {
                                    "test-tciLogger",
                                    "test-tciSecurity",
                                    "test-mavenCIJob"]
-                    def jobs = [:]
+                    def testPhase = new phase(this, true)
 
-                    job_names.each{ jobs[it] = {
-                            stage(it) {
-                                build job: it, wait: true
-                            }
-                        }
+                    for (item in job_names) {
+                        testPhase.addJob(jobName: item)
                     }
-                    parallel jobs
+
+                    testPhase.run()
                 }
             }
         }

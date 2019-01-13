@@ -12,22 +12,9 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    def job_names=['test-tciGeneral',
-                                   "test-tciBuildUser",
-                                   "test-tciJobs",
-                                   "test-tciGit",
-                                   "test-tciEnv",
-                                   "test-tciNotifications",
-                                   "test-tciPython",
-                                   "test-tciTemplatePipeline",
-                                   "test-tciLogger",
-                                   "test-tciSecurity",
-                                   "test-mavenCIJob"]
                     def testPhase = new phase(this, true)
-
-                    for (item in job_names) {
-                        testPhase.addJob(jobName: item)
-                    }
+                    testPhase.addJob(jobName: "test-tciEnv")
+                    testPhase.addJob(jobName: "test-tciEnv")
 
                     testPhase.run()
                 }
