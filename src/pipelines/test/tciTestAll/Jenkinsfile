@@ -22,6 +22,7 @@ pipeline {
                                    "test-tciPython",
                                    "test-tciTemplatePipeline",
                                    "test-tciLogger",
+                                   "test-tciParallelPhase",
 //                                   "test-mavenCIJob",
                                    "test-tciSecurity"]
                     def testPhase = new parallelPhase(this, "TCI overall tests", true)
