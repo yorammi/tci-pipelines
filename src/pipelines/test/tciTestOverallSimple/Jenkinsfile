@@ -24,10 +24,10 @@ pipeline {
                                    "test-tciLogger",
                                    "test-tciSecurity",
                                    "test-mavenCIJob"]
-                    def testPhase = new phase(this, true)
+                    def testPhase = new parallelPhase(this, "TCI overall tests", true)
 
                     for (item in job_names) {
-                        testPhase.addJob(jobName: item)
+                        testPhase.addSubJob(job:item)
                     }
 
                     testPhase.run()
