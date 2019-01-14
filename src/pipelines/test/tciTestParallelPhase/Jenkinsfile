@@ -22,13 +22,9 @@ pipeline {
                             booleanParam(name: 'testBoolean', value: false),
                             string(name: 'testString', value: "direct test2 string")]
 
-                    def job_names=['test-fromParallelPhase',
-                                   "test-fromParallelPhase"]
                     def testPhase = new parallelPhase(this, "TCI overall tests", true)
-
-                    testPhase.addSubJob(job:'test-withParameters', parameters:test1_params)
-                    testPhase.addSubJob(job:'test-withParameters', parameters:test2_params)
-
+                    testPhase.addSubJob(job:'test-fromParallelPhase', parameters:test1_params)
+                    testPhase.addSubJob(job:'test-fromParallelPhase', parameters:test2_params)
                     testPhase.run()
                 }
             }
