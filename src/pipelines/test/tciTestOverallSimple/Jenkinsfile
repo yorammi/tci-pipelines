@@ -14,16 +14,16 @@ pipeline {
             steps {
                 script {
                     def job_names=['test-tciGeneral',
-                                   "test-tciBuildUser",
-                                   "test-tciJobs",
-                                   "test-tciGit",
-                                   "test-tciEnv",
-                                   "test-tciNotifications",
-                                   "test-tciPython",
-                                   "test-tciTemplatePipeline",
-                                   "test-tciLogger",
-                                   "test-tciSecurity",
-                                   "test-mavenCIJob"]
+//                                   "test-tciBuildUser",
+//                                   "test-tciJobs",
+//                                   "test-tciGit",
+//                                   "test-tciEnv",
+//                                   "test-tciNotifications",
+//                                   "test-tciPython",
+//                                   "test-tciTemplatePipeline",
+//                                   "test-tciLogger",
+//                                   "test-mavenCIJob",
+                                   "test-tciSecurity"]
                     def testPhase = new parallelPhase(this, "TCI overall tests", true)
 
                     for (item in job_names) {
