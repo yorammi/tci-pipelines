@@ -1,6 +1,6 @@
 @Library ("tci-library") _
 
-import tci.multiJob.phase
+import tci.pipeline.parallelPhase
 
 pipeline {
     agent { label 'tci-jnlp-node' }
@@ -12,9 +12,9 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    def testPhase = new phase(this, true)
-                    testPhase.addJob(jobName: "test-tciEnv")
-                    testPhase.addJob(jobName: "test-tciEnv")
+                    def testPhase = new parallelPhase(this, true)
+                    testPhase.addSubJob("test-tciEnv",propagate:true,wait:true)
+                    testPhase.addSubJob("test-tciGit",propagate:false,wait:false)
 
                     testPhase.run()
                 }
