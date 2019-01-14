@@ -13,7 +13,7 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    def testPhase = new parallelPhase(this, true)
+                    def testPhase = new parallelPhase(this, "Multi-job", true)
                     testPhase.addSubJob(job:"test-tciEnv", propagate:true, wait:true)
                     testPhase.addSubJob(job:"test-tciGit", propagate:false, wait:false)
 
