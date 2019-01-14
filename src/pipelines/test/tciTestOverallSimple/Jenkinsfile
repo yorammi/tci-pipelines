@@ -1,6 +1,6 @@
 @Library ("tci-library") _
 
-import tci.multiJob.phase
+import tci.pipeline.parallelPhase
 
 pipeline {
     agent { label 'tci-jnlp-node' }
