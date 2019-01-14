@@ -1,0 +1,36 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    parameters {
+        choice (
+                choices: 'option1\noption2\noption3',
+                description: 'Choose option1 or option2',
+                name : 'testOption')
+        string (
+                defaultValue: '',
+                description: 'Insert test string',
+                name : 'testString')
+        booleanParam (
+                defaultValue: false,
+                description: 'Check if true',
+                name : 'testBoolean')
+    }
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        skipDefaultCheckout()
+    }
+    stages {
+        stage("test") {
+            steps {
+                script {
+                    tciLogger.info ("[testOption] ${params.testOption}")
+                    tciLogger.info ("[testString] ${params.testString}")
+                    tciLogger.info ("[testBoolean] ${params.testBoolean}")
+                    currentBuild.displayName += "[testOption] ${params.testOption} [testString] ${params.testString} [testBoolean] ${params.testBoolean}"
+                }
+            }
+        }
+    }
+}

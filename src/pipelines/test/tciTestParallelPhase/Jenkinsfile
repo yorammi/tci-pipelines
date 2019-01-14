@@ -1,0 +1,37 @@
+@Library ("tci-library") _
+
+import tci.pipeline.parallelPhase
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        skipDefaultCheckout()
+    }
+    stages {
+        stage("test") {
+            steps {
+                script {
+                    def test1_params = [
+                            string(name: 'testOption', value: "option2"),
+                            booleanParam(name: 'testBoolean', value: true),
+                            string(name: 'testString', value: "direct test1 string")]
+                    def test2_params = [
+                            string(name: 'testOption', value: "option3"),
+                            booleanParam(name: 'testBoolean', value: false),
+                            string(name: 'testString', value: "direct test2 string")]
+
+                    def job_names=['test-fromParallelPhase',
+                                   "test-fromParallelPhase"]
+                    def testPhase = new parallelPhase(this, "TCI overall tests", true)
+
+                    testPhase.addSubJob(job:'test-withParameters', parameters:test1_params)
+                    testPhase.addSubJob(job:'test-withParameters', parameters:test2_params)
+
+                    testPhase.run()
+                }
+            }
+        }
+    }
+}
