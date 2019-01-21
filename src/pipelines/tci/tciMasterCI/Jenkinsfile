@@ -35,7 +35,7 @@ pipeline {
                     sh '''
                             echo "before checkout"
                             echo "build customized plugins.txt"
-                            cp tci-bloody-jenkins/plugins.txt plguins.txt
+                            cat tci-bloody-jenkins/plugins.txt > plguins.txt
                             cat tci-master/src/resources/tci/plugins-${TYPE}.txt >> plugins.txt
                             cat plugins.txt | sort > tci-bloody-jenkins/plugins.txt
                             cat tci-bloody-jenkins/plugins.txt
