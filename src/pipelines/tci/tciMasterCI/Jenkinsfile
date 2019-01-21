@@ -35,10 +35,10 @@ pipeline {
                     sh '''
                             echo "before checkout"
                             echo "build customized plugins.txt"
+                            cat tci-bloody-jenkins/plugins.txt
                             cat tci-bloody-jenkins/plugins.txt > plguins.txt
                             cat tci-master/src/resources/tci/plugins-${TYPE}.txt >> plugins.txt
                             cat plugins.txt | sort > tci-bloody-jenkins/plugins.txt
-                            cat tci-bloody-jenkins/plugins.txt
                             cp tci-master/src/config-handlers/*.groovy tci-bloody-jenkins/config-handlers | true
                         '''
                 }
