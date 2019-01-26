@@ -30,16 +30,7 @@ pipeline {
             steps {
                 script {
                     currentBuild.displayName += " [TYPE] ${params.TYPE} [VERSION] ${params.VERSION} [PUBLISH?] ${params.PUBLISH}"
-                    tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/tci-bloody-jenkins.git", dir: "tci-bloody-jenkins", branch: "master")
-                    tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/tci-master.git",dir: "tci-master", branch: "master")
-                    sh '''
-                            echo "before checkout"
-                            echo "build customized plugins.txt"
-                            cat tci-bloody-jenkins/plugins.txt > plugins.txt
-                            cat tci-master/src/resources/tci/plugins-${TYPE}.txt >> plugins.txt
-                            cat plugins.txt | sort > tci-bloody-jenkins/plugins.txt
-                            cp tci-master/src/config-handlers/*.groovy tci-bloody-jenkins/config-handlers | true
-                        '''
+                    tciGit.gitCheckout(repoUrl: "git@github.com:TikalCI/tci-bloody-jenkins.git", dir: "tci-bloody-jenkins", branch: "cust/${params.TYPE}")
                 }
             }
         }
@@ -64,11 +55,6 @@ pipeline {
                     }
                 }
             }
-        }
-    }
-    post {
-        always {
-            archiveArtifacts "plugins.txt"
         }
     }
 }
