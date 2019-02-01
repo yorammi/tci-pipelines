@@ -32,7 +32,7 @@ pipeline {
                         testPhase.addSubJob(job:item)
                     }
 
-//                    testPhase.run()
+                    testPhase.run()
                 }
             }
         }
