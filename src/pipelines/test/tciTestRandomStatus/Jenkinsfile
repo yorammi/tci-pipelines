@@ -1,0 +1,19 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent { label 'tci-jnlp-node' }
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        skipDefaultCheckout()
+    }
+    stages {
+        stage("test") {
+            steps {
+                script {
+                    tciJobs.setRandomBuildStatus ()
+                }
+            }
+        }
+    }
+}
