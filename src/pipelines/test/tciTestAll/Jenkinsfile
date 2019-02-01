@@ -14,25 +14,23 @@ pipeline {
         stage("test") {
             steps {
                 script {
-//                    def job_names=['test-tciGeneral',
-//                                   "test-tciBuildUser",
-//                                   "test-tciJobs",
-//                                   "test-tciGit",
-//                                   "test-tciEnv",
-//                                   "test-tciNotifications",
-//                                   "test-tciPython",
-//                                   "test-tciTemplatePipeline",
-//                                   "test-tciLogger",
-//                                   "test-tciParallelPhase",
-////                                   "test-mavenCIJob",
-//                                   "test-tciSecurity"]
+                    def job_names=['test-tciGeneral',
+                                   "test-tciBuildUser",
+                                   "test-tciJobs",
+                                   "test-tciGit",
+                                   "test-tciEnv",
+                                   "test-tciNotifications",
+                                   "test-tciPython",
+                                   "test-tciTemplatePipeline",
+                                   "test-tciLogger",
+                                   "test-tciParallelPhase",
+//                                   "test-mavenCIJob",
+                                   "test-tciSecurity"]
                     def testPhase = new parallelPhase(this, "TCI overall tests", true)
 
-                    testPhase.addSubJob(job:'test-randomStatus', retry:2)
-                    testPhase.addSubJob(job:'test-tciGeneral')
-//                    for (item in job_names) {
-//                        testPhase.addSubJob(job:item)
-//                    }
+                    for (item in job_names) {
+                        testPhase.addSubJob(job:item)
+                    }
 
                     testPhase.run()
                 }
