@@ -28,6 +28,7 @@ pipeline {
                                    "test-tciSecurity"]
                     def testPhase = new parallelPhase(this, "TCI overall tests", true)
 
+                    testPhase.addSubJob(job:'test-tciGeneral')
                     for (item in job_names) {
                         testPhase.addSubJob(job:item)
                     }
