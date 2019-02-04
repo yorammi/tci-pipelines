@@ -1,0 +1,25 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent any
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        ansiColor('xterm')
+        skipDefaultCheckout()
+    }
+    stages {
+        stage ('`test') {
+            steps {
+                script {
+                    tciEnv.initEnv()
+                    def list=tciGeneral.getSortedPluginsList()
+                    list.each {
+                        sh "echo ${it} >> plugins.txt"
+                    }
+                    archiveArtifacts "plugins.txt"
+                }
+            }
+        }
+    }
+}
