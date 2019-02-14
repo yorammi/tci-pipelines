@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Test input') {
+            steps {
+                script {
+                    def jobParameters = input(
+                            id: 'jobParameters', message: 'Job parameters:', parameters: [
+                            [$class: 'ChoiceParameterDefinition', choices: 'test1\ntest2', description: 'choose an option', name: 'TEST1_PARAM'],
+                            [$class: 'ChoiceParameterDefinition', choices: 'test3\ntest4', description: 'choose an option', name: 'TEST2_PARAM']])
+                    echo "TEST1_PARAM=${jobParameters.TEST1_PARAM}"
+                    echo "TEST2_PARAM=${jobParameters.TEST2_PARAM}"
+                }
+            }
+        }
+    }
+}
