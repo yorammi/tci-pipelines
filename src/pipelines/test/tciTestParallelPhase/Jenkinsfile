@@ -23,10 +23,17 @@ pipeline {
                             booleanParam(name: 'testBoolean', value: false),
                             string(name: 'testString', value: "direct test2 string")]
 
-                    def testPhase = new parallelPhase(this, "TCI parallel tests", true)
+                    def sequence1 = {
+                        echo 'Hello World again'
+                        echo 'and again'
+                        sh "echo 'shell command'"
+                    }
+
+                    def testPhase = new parallelPhase(this, "TCI parallel tests", false, true)
                     testPhase.addSubJob(job:'test-fromParallelPhase', parameters:test1_params)
                     testPhase.addSubJob(job:'test-fromParallelPhase', parameters:test2_params)
                     testPhase.addSubJob(job:'test-randomStatus', retry:20)
+                    testPhase.addStepsSequence(sequence:sequence1)
                     testPhase.run()
                 }
             }
