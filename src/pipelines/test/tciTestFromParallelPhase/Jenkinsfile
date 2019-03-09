@@ -29,7 +29,7 @@ pipeline {
                     tciLogger.info ("[testOption] ${params.testOption}")
                     tciLogger.info ("[testString] ${params.testString}")
                     tciLogger.info ("[testBoolean] ${params.testBoolean}")
-                    currentBuild.displayName += "[testOption] ${params.testOption} [testString] ${params.testString} [testBoolean] ${params.testBoolean}"
+                    currentBuild.displayName += " [testOption] ${params.testOption} [testString] ${params.testString} [testBoolean] ${params.testBoolean}"
                 }
             }
         }
