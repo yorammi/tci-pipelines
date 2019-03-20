@@ -26,7 +26,7 @@ pipeline {
                                    "test-tciParallelPhase",
 //                                   "test-mavenCIJob",
                                    "test-tciSecurity"]
-                    def testPhase = new parallelPhase(this, "TCI overall tests", true)
+                    def testPhase = new parallelPhase(this, "TCI overall tests", false)
 
                     for (item in job_names) {
                         testPhase.addSubJob(job:item)
