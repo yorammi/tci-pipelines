@@ -1,7 +1,7 @@
 @Library ("tci-library") _
 
 pipeline {
-    agent { label 'tci-jnlp-node' }
+    agent none
     options {
         timestamps()
         buildDiscarder(logRotator(numToKeepStr: '30'))
