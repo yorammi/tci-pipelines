@@ -1,7 +1,7 @@
 @Library ("tci-library") _
 
 pipeline {
-    agent { label 'tci-jnlp-node' }
+    agent none
     parameters {
         choice (
                 choices: 'option1\noption2\noption3',
