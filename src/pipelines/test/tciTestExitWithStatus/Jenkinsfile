@@ -1,0 +1,26 @@
+@Library ("tci-library") _
+
+pipeline {
+    agent none
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        ansiColor('xterm')
+        skipDefaultCheckout()
+    }
+    parameters {
+        choice (
+                choices: 'SUCCESS\nFAILURE\nUNSTABLE\nABORTED',
+                description: 'Choose exit status',
+                name : 'exitStatus')
+    }
+    stages {
+        stage("set exit status") {
+            steps {
+                script {
+                    currentBuild.result=params.exitStatus
+                }
+            }
+        }
+    }
+}
