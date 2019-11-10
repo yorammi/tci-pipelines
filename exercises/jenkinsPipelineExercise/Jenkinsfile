@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 10, unit: 'SECONDS')
+    }
+    parameters {
+        booleanParam( name: 'RANDOM' , defaultValue: false, description: 'Whether to set a random status or not')
+        choice( name: 'STATUS', choices: 'SUCCESS\nUNSTABLE\nFAILURE\nABORTED', description: '')
+    }
+    stages {
+        stage("main") {
+            steps {
+                script {
+                    randomStatus = "SUCCESS"
+                    if(params.RANDOM) {
+                        randomNumber = Math.abs(new Random().nextInt() % 4)
+                        switch (randomNumber)
+                        {
+                            case 0:
+                                randomStatus = "SUCCESS"
+                                break;
+                            case 1:
+                                randomStatus = "UNSTABLE"
+                                break;
+                            case 2:
+                                randomStatus = "FAILURE"
+                                break;
+                            case 3:
+                                randomStatus = "ABORTED"
+                                break;
+                            default:
+                                randomStatus = "SUCCESS"
+                                break;
+                        }
+                    }
+                    else {
+                        currentBuild.result = params.STATUS
+                    }
+                    currentBuild.result = randomStatus
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                if( currentBuild.result == 'SUCCESS') {
+                    def previousBuildResult=currentBuild.rawBuild.getPreviousBuild()?.getResult().toString()
+                    if(previousBuildResult != 'SUCCESS') {
+                        echo "[STATUS] SUCCESS (was: ${previousBuildResult})"
+                    }
+                }
+                else {
+                    echo "[STATUS] ${currentBuild.result}"
+                }
+            }
+        }
+    }
+}
